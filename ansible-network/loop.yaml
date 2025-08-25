@@ -1,0 +1,17 @@
+---
+- name: Configure Banner
+  hosts: routers
+  gather_facts: no
+  connection: network_cli
+  vars:
+    ansible_network_os: cisco.ios.ios
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+  tasks:
+    - name: Configure multiple banners
+      cisco.ios.ios_banner:
+        banner: "{{ item.banner }}"
+        text: "{{ item.text }}"
+        state: present
+      with_items:
+        - { banner: "motd", text: "Unauthorized access prohibited!" }
+        - { banner: "login", text: "Welcome to Cisco Router" }

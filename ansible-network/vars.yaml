@@ -15,7 +15,7 @@
       cisco.ios.ios_banner:
         banner: login
         text: |
-          ITHelpdesk Authorized Personnel Only
+          Authorized Personnel Only
         state: present
     - name: Add loopback
       cisco.ios.ios_interfaces:
