@@ -1,0 +1,44 @@
+- name: General Config
+  hosts: routers
+  gather_facts: yes
+  connection: network_cli
+  vars:
+    ansible_network_os: cisco.ios.ios
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+    loopback_name: Loopback21
+    loopback_ips:
+      - address: 192.168.32.1/32
+      - address: 192.168.32.2/32
+        secondary: true
+  tasks:
+    - name: Add Banner
+      cisco.ios.ios_banner:
+        banner: login
+        text: |
+          ITHelpdesk Authorized Personnel Only
+        state: present
+    - name: Add loopback
+      cisco.ios.ios_interfaces:
+        config:
+          - name: "{{ loopback_name }}"
+            enabled: true
+    - name: Assign IP addresses to Loopback
+      cisco.ios.ios_l3_interfaces:
+        config:
+          - name: "{{ loopback_name }}"
+            ipv4: "{{ loopback_ips }}"
+        state: merged
+    - name: Gather interface facts
+      cisco.ios.ios_facts:
+        gather_subset: interfaces
+    - name: Show only Loopback interface facts
+      debug:
+        msg: "{{ ansible_net_interfaces[loopback_name] }}"
+    - name: Run command on router
+      cisco.ios.ios_command:
+        commands:
+          - "show running-config | section {{ loopback_name }}"
+      register: loopback_config
+    - name: Print Loopback config
+      debug:
+        var: loopback_config.stdout[0]
