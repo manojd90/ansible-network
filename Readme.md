@@ -16,7 +16,7 @@ This Ansible playbook configures Cisco IOS/XE devices with the following tasks:
 
 ```bash
 ansible-galaxy collection install cisco.ios
-
+```
 
 ## References
 
