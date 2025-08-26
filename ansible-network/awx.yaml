@@ -2,8 +2,8 @@
   hosts: routers
   gather_facts: yes
   connection: network_cli
-  # collections:
-  #   - cisco.ios
+  collections:
+    - community.cisco.ios
   vars:
     ansible_network_os: cisco.ios.ios
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
