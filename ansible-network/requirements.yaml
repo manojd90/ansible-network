@@ -9,10 +9,10 @@
         name: textfsm
         state: present
 
-    - name: Wait 5 minutes for verification
-      ansible.builtin.pause:
-        minutes: 5
-        prompt: "TextFSM installed. Verify now and press Enter to continue or Ctrl+C to abort"
+    # - name: Wait 5 minutes for verification
+    #   ansible.builtin.pause:
+    #     minutes: 5
+    #     prompt: "TextFSM installed. Verify now and press Enter to continue or Ctrl+C to abort"
 
     - name: Verify TextFSM is installed
       ansible.builtin.command: python3 -c "import textfsm; print(textfsm.__version__)"
