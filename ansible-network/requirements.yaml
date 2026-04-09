@@ -4,18 +4,18 @@
   gather_facts: false
   tasks:
 
-    - name: Wait {{ duration_before }} before installation
+    - name: Wait "{{ duration_before }}" before installation
       ansible.builtin.pause:
-        seconds: {{ duration_before }}
+        seconds: "{{ duration_before }}"
         prompt: "Precheck the pip3 configureation before TextFSM install"
 
     - name: Install TextFSM using the correct Python
       ansible.builtin.command: /usr/bin/python3 -m pip install textfsm --user
       register: pip_install
 
-    - name: Wait {{ duration_after }} after installation
+    - name: Wait "{{ duration_after }}" after installation
       ansible.builtin.pause:
-        seconds: {{ duration_after }}
+        seconds: "{{ duration_after }}"
         prompt: "TextFSM installed. Verify now and press Enter to continue or Ctrl+C to abort"
 
     - name: Debug install output
