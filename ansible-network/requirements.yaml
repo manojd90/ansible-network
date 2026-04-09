@@ -9,10 +9,10 @@
         seconds: "{{ duration_before }}"
         prompt: "Precheck the pip3 configureation before TextFSM install"
 
-    - name: Install TextFSM using the correct Python
-      ansible.builtin.command: /usr/bin/python3 -m pip install textfsm --user
+    - name: Install TextFSM using python3.12
+      ansible.builtin.command: /usr/bin/python3.12 -m pip install textfsm --break-system-packages
       register: pip_install
-
+      
     - name: Wait "{{ duration_after }}" after installation
       ansible.builtin.pause:
         seconds: "{{ duration_after }}"
