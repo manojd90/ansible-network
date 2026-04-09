@@ -4,18 +4,16 @@
   gather_facts: false
   tasks:
 
-    - name: Install TextFSM
-      ansible.builtin.pip:
-        name: textfsm
-        state: present
+    - name: Install TextFSM using the correct Python
+      ansible.builtin.command: /usr/bin/python3 -m pip install textfsm --user
+      register: pip_install
 
-    # - name: Wait 5 minutes for verification
-    #   ansible.builtin.pause:
-    #     minutes: 5
-    #     prompt: "TextFSM installed. Verify now and press Enter to continue or Ctrl+C to abort"
+    - name: Debug install output
+      ansible.builtin.debug:
+        msg: "{{ pip_install.stdout }}"
 
     - name: Verify TextFSM is installed
-      ansible.builtin.command: python3 -c "import textfsm; print(textfsm.__version__)"
+      ansible.builtin.command: /usr/bin/python3 -c "import textfsm; print(textfsm.__version__)"
       register: textfsm_version
 
     - name: Print TextFSM version
