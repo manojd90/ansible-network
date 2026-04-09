@@ -18,12 +18,12 @@
         seconds: "{{ duration_after }}"
         prompt: "TextFSM installed. Verify now and press Enter to continue or Ctrl+C to abort"
 
-    - name: Debug install output
-      ansible.builtin.debug:
-        msg: "{{ pip_install.stdout }}"
+    - name: Set fact with TextFSM version
+      ansible.builtin.set_fact:
+        textfsm_version: "{{ textfsm_check.stdout }}"
 
     - name: Verify TextFSM is installed
-      ansible.builtin.command: /usr/bin/python3 -c "import textfsm; print(textfsm.__version__)"
+      ansible.builtin.command: /usr/bin/python3.12 -c "import textfsm; print(textfsm.__version__)"
       register: textfsm_version
 
     - name: Print TextFSM version
